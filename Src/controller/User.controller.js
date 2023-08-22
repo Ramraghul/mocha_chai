@@ -13,6 +13,9 @@ const checking = (req, res) => {
 
 const createNewUser = async (req, res) => {
     try {
+        if (req.query.error === 'true') {
+            throw new Error('Simulated error');
+        }
         const input = req.body;
         const check = await userModel.create(input)
         if (check) {
@@ -84,6 +87,21 @@ const createNewUser = async (req, res) => {
 //     }
 // }
 
+const getAllUser = async(req, res) => {
+    try {
+        if (req.query.error === 'true') {
+            throw new Error('Simulated error');
+        } else {
+            const users = await userModel.findAll()
+            if (!users) {
+                return res.status(404).json({ status: false, message: 'No users founded' })
+            } else {
+                return res.status(200).json({ status: true, data: users })
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ status: false, message: 'Something went wrong' });
+    }
+}
 
-
-module.exports = { checking, createNewUser }
+module.exports = { checking, getAllUser, createNewUser }

@@ -1,5 +1,7 @@
 const swaggerJsdoc = require('swagger-jsdoc');
 const BaseUrlVersion = "v1/learnEnd";
+require('dotenv');
+const port = process.env.PORT
 const option = {
     definition: {
         openapi: '3.1.0',
@@ -23,11 +25,11 @@ const option = {
         },
         servers: [
             {
-                url: 'http://localhost:7099/',
+                url: `http://localhost:${port}/`,
                 description: 'Development Server'
             },
             {
-                url: 'https://localhost:7099/',
+                url: `http://localhost:${port}/`,
                 description: 'Production Server'
             }
         ],
