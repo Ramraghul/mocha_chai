@@ -1,0 +1,39 @@
+{
+  "name": "restfull-api-with-mocha-and-chai",
+  "version": "1.0.0",
+  "description": "Learning unit testing tool using mocha and chai",
+  "main": "Server.js",
+  "scripts": {
+    "start": "node Server.js && nodemon Server.js",
+    "test": "PORT=5000 nyc --reporter=text mocha --timeout 10000 ./Src/test --exit",
+    "start:dev": "nodemon Server.js",
+    "lint": "eslint ./Src",
+    "format": "prettier --write \"./Src/**/*.js\"",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm test -- --reporter=text-lcov > coverage.lcov && codecov",
+    "clean": "rm -rf coverage"
+  },
+  "author": "Raghul",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.5.2",
+    "sequelize": "^6.32.1"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.4.0",
+    "colors": "^1.4.0",
+    "eslint": "^8.45.0",
+    "husky": "^8.0.3",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "prettier": "^3.0.0",
+    "sequelize-cli": "^6.6.1",
+    "supertest": "^6.3.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  }
+}
