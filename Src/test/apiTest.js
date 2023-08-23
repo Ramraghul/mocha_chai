@@ -61,7 +61,7 @@ describe('Get All user endpoint testing', () => {
 });
 
 //Create new user;
-describe('Create New User', () => {
+describe('Create New User endpoint testing', () => {
   it('Should handle error', (done) => {
     chai.request(API)
       .post(BaseUrl + '/createNewUser')
@@ -90,17 +90,27 @@ describe('Create New User', () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res.request._data).to.deep.equal(newUser);
-        if (res.body.status) {
-          expect(res).to.have.status(201);
-          expect(res.body.message).to.equal('Successfully new user created');
-        } else {
-          expect(res).to.have.status(500);
-          expect(res.body.message).to.equal('something went wrong');
-        }
+        expect(res).to.have.status(201);
+        expect(res.body.message).to.equal('Successfully new user created');
+        done();
+      });
+  });
+})
+
+//Get user By id(getUserById/:id) 
+describe('get user by id endpoint checking', () => {
+  it('should handle error', (done) => {
+    const userId = 1;
+    chai.request(API)
+      .get(BaseUrl + `/getUserById/${userId}`)
+      .query({ error: true })
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(500);
+        expect(res.body.status).to.be.false;
+        expect(res.body.message).to.equal('Something went wrong');
         done();
       });
   });
 
-
 })
-

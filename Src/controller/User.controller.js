@@ -26,68 +26,71 @@ const createNewUser = async (req, res) => {
     }
 }
 
-// const getUserById = async (req, res) => {
-//     try {
-//         const userId = req.params.id;
-//         const input = await userModel.findOne({ where: { id: userId } });
-//         if (input) {
-//             res.status(200).json({ status: true, data: input.dataValues });
-//         } else {
-//             res.status(404).json({ status: false, message: 'User not found' });
-//         }
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json({ status: false, message: 'Something went wrong' });
-//     }
-// };
+const getUserById = async (req, res) => {
+    try {
+        if (req.query.error === true) {
+            throw new Error('Get user by id simulation is failed')
+        }
+        const userId = req.params.id;
+        const input = await userModel.findOne({ where: { id: userId } });
+        if (input) {
+            res.status(200).json({ status: true, data: input.dataValues });
+        } else {
+            res.status(404).json({ status: false, message: 'User not found' });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ status: false, message: 'Something went wrong' });
+    }
+};
 
 
-// const updateOldUser = async (req, res) => {
-//     try {
-//         const userId = req.params.id;
-//         const input = req.body;
+const updateOldUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const input = req.body;
 
-//         const user = await userModel.findByPk(userId);
-//         if (!user) {
-//             return res.status(404).json({ status: false, message: 'User not found' });
-//         }
+        const user = await userModel.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ status: false, message: 'User not found' });
+        }
 
-//         const updates = await userModel.update(input, {
-//             where: { id: userId },
-//         })
-//         if (updates) {
-//             res.status(200).json({ status: true, message: 'Successfully updated user' });
-//         }
+        const updates = await userModel.update(input, {
+            where: { id: userId },
+        })
+        if (updates) {
+            res.status(200).json({ status: true, message: 'Successfully updated user' });
+        }
 
-//     } catch (error) {
-//         res.status(500).json({ status: false, message: 'Something went wrong' });
-//     }
-// };
-
-
-// const userDelete = async (req, res) => {
-//     try {
-//         const userId = req.params.id;
-
-//         const user = await userModel.findByPk(userId);
-//         if (!user) {
-//             return res.status(404).json({ status: false, message: 'User not found' });
-//         }
-
-//         const updates = await userModel.update({ is_delete: 1 }, {
-//             where: { id: userId },
-//         });
-//         if (updates) {
-//             res.status(200).json({ status: true, message: 'Successfully user deleted' });
-//         }
+    } catch (error) {
+        res.status(500).json({ status: false, message: 'Something went wrong' });
+    }
+};
 
 
-//     } catch (error) {
-//         res.status(500).json({ status: false, message: 'Something went wrong' });
-//     }
-// }
+const userDelete = async (req, res) => {
+    try {
+        const userId = req.params.id;
 
-const getAllUser = async(req, res) => {
+        const user = await userModel.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ status: false, message: 'User not found' });
+        }
+
+        const updates = await userModel.update({ is_delete: 1 }, {
+            where: { id: userId },
+        });
+        if (updates) {
+            res.status(200).json({ status: true, message: 'Successfully user deleted' });
+        }
+
+
+    } catch (error) {
+        res.status(500).json({ status: false, message: 'Something went wrong' });
+    }
+}
+
+const getAllUser = async (req, res) => {
     try {
         if (req.query.error === 'true') {
             throw new Error('Simulated error');
@@ -104,4 +107,4 @@ const getAllUser = async(req, res) => {
     }
 }
 
-module.exports = { checking, getAllUser, createNewUser }
+module.exports = { checking, getAllUser, createNewUser, getUserById, userDelete, updateOldUser }
