@@ -1,7 +1,7 @@
 const {Sequelize} = require("sequelize");
 require('dotenv').config();
 const dataBase = process.env.DB_PASSWORD
-
+ 
 const sequelize = new Sequelize("Learning", "root", dataBase, {
   host: "localhost",
   dialect: "mysql",
